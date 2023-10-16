@@ -1,3 +1,94 @@
+let currentPiece, nextPiece;
+let ctx;
+const canvas = document.getElementById('tetrisCanvas');
+ctx = canvas.getContext('2d'); // Inicialize ctx aqui
+
+const PIECES = [
+    {
+        shape: [
+            [2, 2, 2, 2]
+        ],
+        color: '#FF0000' // Cor original da peça
+    },
+    {
+        shape:[
+            [3]
+        ],
+        color: '#FFD700'
+    },
+    {
+        shape:[
+            [2, 2, 2],
+            [0, 2, 0]
+        ],
+        color: '#00FF00'
+    },
+    {
+        shape:[
+            [2, 2, 2],
+            [2, 0, 0]
+        ],
+        color: '#0000FF' 
+    },
+    {
+        shape:[
+            [2, 2, 2],
+            [0, 0, 2]
+        ],
+        color: '#FFA500'
+    },
+    {
+        shape:[
+            [2, 2],
+            [2, 2] 
+        ],
+        color: '#800080'
+    },
+    {
+        shape:[
+            [2, 2, 0],
+            [0, 2, 2] 
+        ],
+        color: '#00FFFF'
+    },
+    {
+        shape:[
+            [0, 2, 2],
+            [2, 2, 0]
+        ],
+        color: '#FF00FF'
+    },
+    {
+        shape:[
+            [2, 0, 2],
+            [2, 2, 2]
+        ],
+        color: '#FFFF00'
+    }
+]
+
+
+function drawNextPiece(nextPiece) {
+    const nextCanvas = document.getElementById('nextPieceCanvas');
+    const ctx = nextCanvas.getContext('2d');
+    ctx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+
+    const piece = nextPiece.piece;
+    const cellSize = 30; // Tamanho das células do canvas
+    const xOffset = (nextCanvas.width - piece[0].length * cellSize) / 2;
+    const yOffset = (nextCanvas.height - piece.length * cellSize) / 2;
+
+    for (let i = 0; i < piece.length; i++) {
+        for (let j = 0; j < piece[i].length; j++) {
+            if (piece[i][j]) {
+                ctx.fillStyle = PIECES[piece[i][j]].color;
+                ctx.fillRect(xOffset + j * cellSize, yOffset + i * cellSize, cellSize, cellSize);
+                ctx.strokeRect(xOffset + j * cellSize, yOffset + i * cellSize, cellSize, cellSize);
+            }
+        }
+    }
+}
+
 function play_game(ROWS, COLS) {    
     var remaining_points = 300
     var can_remove = true
@@ -6,6 +97,9 @@ function play_game(ROWS, COLS) {
     const level = document.getElementById('level')
     const lines = document.getElementById('lines')
    
+    currentPiece = newPiece();
+    nextPiece = newPiece();
+    drawNextPiece(nextPiece); 
 
     function clock() {
         const timeElement = document.getElementById('time');
@@ -25,64 +119,39 @@ function play_game(ROWS, COLS) {
         setTimeout(clock, 1000);
     }
 
-    var PHYSICS_LOOP_INTERVAL = 1000 / 2;
-
     let board = [];
     for (let i = 0; i < ROWS; i++) {
         board.push(new Array(COLS).fill(0));
     }
 
-    const PIECES = [
-        [
-            [1, 1, 1, 1] // Linha
-        ],
-        [
-            [1] // Especial
-        ],
-        [
-            [1, 1, 1],
-            [0, 1, 0] // T
-        ],
-        [
-            [1, 1, 1],
-            [1, 0, 0] // L
-        ],
-        [
-            [1, 1, 1],
-            [0, 0, 1] // L invertido
-        ],
-        [
-            [1, 1],
-            [1, 1] // Quadrado
-        ],
-        [
-            [1, 1, 0],
-            [0, 1, 1] // Z
-        ],
-        [
-            [0, 1, 1],
-            [1, 1, 0] // Z invertido
-        ],
-        [
-            [1, 0, 1],
-            [1, 1, 1] // U
-        ]
-    ]
+    function drawPiece() {
+        for (let i = 0; i < currentPiece.piece.length; i++) {
+            for (let j = 0; j < currentPiece.piece[i].length; j++) {
+                if (currentPiece.piece[i][j]) {
+                    ctx.fillStyle = PIECES[currentPiece.piece[i][j]].color;
+                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                }
+            }
+        }
+    }
+
+    function generateNewPiece() {
+        currentPiece = nextPiece;
+        nextPiece = newPiece();
+        drawNextPiece(nextPiece); // Atualize a próxima peça
+    }
+
 
     function newPiece() {
-        const piece = PIECES[Math.floor(Math.random() * PIECES.length)];
-        // Atribua um valor exclusivo a cada tipo de peça
-        const pieceValue = PIECES.indexOf(piece) + 2; // +2 para evitar valores 0 e 1
+        const piece = PIECES[Math.floor(Math.random() * PIECES.length)].shape;
         return {
-            piece: piece.map(row => row.map(cell => cell * pieceValue)), // Multiplica a peça pelo valor
+            piece,
             x: Math.floor(COLS / 2) - Math.floor(piece[0].length / 2),
             y: 0
         };
     }
-
-    let currentPiece = newPiece();
-
-    const canvas = document.getElementById('tetrisCanvas')
+        
     const tetris_content = document.getElementById('tetris_content')
     const choose_board = document.getElementById('choose_board')
     const ctx = canvas.getContext('2d')
@@ -107,39 +176,15 @@ function play_game(ROWS, COLS) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < ROWS; i++) {
             for (let j = 0; j < COLS; j++) {
-                if (board[i][j] != 0) {
-                    ctx.fillStyle = '#000000';
+                if (board[i][j] !== 0) {
+                    ctx.fillStyle = PIECES[board[i][j]].color; // Usar a cor original da peça
                     ctx.fillRect(j * 20, i * 20, 20, 20);
                     ctx.strokeRect(j * 20, i * 20, 20, 20);
                 }
             }
         }
     }
-
-    const PIECE_COLORS = {
-        1: '#FFD700', // Dourado para peça unitária
-        2: '#FF0000', // Vermelho para a primeira peça
-        3: '#00FF00', // Verde para a segunda peça
-        4: '#0000FF', // Azul para a terceira peça
-        5: '#FFA500', // Laranja para a quarta peça
-        6: '#800080', // Roxo para a quinta peça
-        7: '#00FFFF', // Ciano para a sexta peça
-        8: '#FF00FF', // Magenta para a sétima peça
-        9: '#FFFF00', // Amarelo para a oitava peça
-    };
     
-
-    function drawPiece() {
-        for (let i = 0; i < currentPiece.piece.length; i++) {
-            for (let j = 0; j < currentPiece.piece[i].length; j++) {
-                if (currentPiece.piece[i][j]) {
-                    ctx.fillStyle = PIECE_COLORS[currentPiece.piece[i][j] > 1 ? currentPiece.piece[i][j] - 1 : 1];
-                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
-                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
-                }
-            }
-        }
-    }
 
     function clearPiece() {
         for (let i = 0; i < currentPiece.piece.length; i++) {
@@ -157,7 +202,7 @@ function play_game(ROWS, COLS) {
         if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
             currentPiece.y--;
             placePiece();
-            currentPiece = newPiece();
+            generateNewPiece();
             can_remove = true
             checkLines()
             if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
@@ -207,6 +252,22 @@ function play_game(ROWS, COLS) {
         }
     }
 
+    function hardDrop(){
+        let originalY = currentPiece.y;
+
+        while (!collides(currentPiece.x, currentPiece.y + 1, currentPiece.piece)) {
+            currentPiece.y++;
+        }
+    
+        if (originalY !== currentPiece.y) {
+            clearPiece();
+            placePiece();
+            generateNewPiece();
+            can_remove = true;
+            checkLines();
+        }
+    }
+
     function pullDownOneTimeFromLine(line) {
         for (let i = line; i >= 0; i--) {
             for (let j = 0; j < COLS; j++) {
@@ -232,6 +293,17 @@ function play_game(ROWS, COLS) {
         return true
     }
 
+    function hasSpecialPiece(line) {
+        for (let i = 0; i < COLS; i++) {
+            if (board[line][i] === 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    let controlsInverted = false;
+
     function checkLines() {
         if (can_remove) {
 
@@ -239,7 +311,11 @@ function play_game(ROWS, COLS) {
             for (let i = 0; i < ROWS; i++) {
                 if (needToRemoveLine(i)) {
                     linesToRemove.push(i)
-                }
+                    if(hasSpecialPiece(i)){
+                        mirrorBoard()
+                        controlsInverted = !controlsInverted;
+                    }
+                } 
             }
     
             if (linesToRemove.length > 0) {
@@ -257,30 +333,68 @@ function play_game(ROWS, COLS) {
         
                 if (remaining_points <= 0) {
                     level.innerText = parseInt(level.innerText) + 1
+                    increaseSpeed();
                     remaining_points += 300
                 }
             }
             can_remove = false
         }
     }
-    
+
+    function mirrorBoard() {
+        for (let i = 0; i < ROWS; i++) {
+            board[i].reverse();
+        }
+    }
 
     document.addEventListener('keydown', event => {
-        switch (event.code) {
-            case 'ArrowDown':
-                moveDown();
-                break;
-            case 'ArrowLeft':
-                moveLeft();
-                break;
-            case 'ArrowRight':
-                moveRight();
-                break;
-            case 'ArrowUp':
-                rotatePiece();
-                break;
+        if (controlsInverted) {
+            switch (event.code) {
+                case 'ArrowDown':
+                    moveDown();
+                    break;
+                case 'ArrowRight':
+                    moveLeft();
+                    break;
+                case 'ArrowLeft':
+                    moveRight();
+                    break;
+                case 'ArrowUp':
+                    rotatePiece();
+                    break;
+                case 'Space':
+                    hardDrop();
+                    break;
+            }
+        } else {
+            switch (event.code) {
+                case 'ArrowDown':
+                    moveDown();
+                    break;
+                case 'ArrowRight':
+                    moveRight();
+                    break;
+                case 'ArrowLeft':
+                    moveLeft();
+                    break;
+                case 'ArrowUp':
+                    rotatePiece();
+                    break;
+                case 'Space':
+                    hardDrop();
+                    break;
+            }
         }
     });
+
+    let currentLevel = 1;
+
+    var PHYSICS_LOOP_INTERVAL = 1000 / 2;
+
+    function increaseSpeed() {
+        currentLevel++;
+        PHYSICS_LOOP_INTERVAL = 1000 / (2 + currentLevel); 
+    }
 
     function physicsLoop() {
         moveDown()
@@ -288,9 +402,9 @@ function play_game(ROWS, COLS) {
     }
 
     function gameLoop() {
-        drawBoard()
-        drawPiece()
-        setTimeout(gameLoop, 1)
+        drawBoard();
+        drawPiece();
+        setTimeout(gameLoop, 1);
     }
 
     gameLoop()
