@@ -235,7 +235,6 @@ function play_game(ROWS, COLS) {
         }
     }
     
-
     function clearPiece() {
         for (let i = 0; i < currentPiece.piece.length; i++) {
             for (let j = 0; j < currentPiece.piece[i].length; j++) {
