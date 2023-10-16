@@ -63,7 +63,7 @@ const PIECES = [
             [2, 0, 2],
             [2, 2, 2]
         ],
-        color: '#73FBFD'
+        color: '#183E0C'
     }
 ]
 
@@ -382,7 +382,7 @@ function play_game(ROWS, COLS) {
         
                 points.innerText = parseInt(points.innerText) + (10 * (linesToRemove.length * linesToRemove.length))
         
-                remaining_points -= parseInt(points.innerText)
+                remaining_points -= (10 * (linesToRemove.length * linesToRemove.length))
         
                 if (remaining_points <= 0) {
                     level.innerText = parseInt(level.innerText) + 1
