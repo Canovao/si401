@@ -67,6 +67,10 @@ const PIECES = [
     }
 ]
 
+var setavoltar = document.getElementById("seta-voltar");
+
+        // Para tornar o botão invisível
+        setavoltar.style.display = "none";
 
 function drawNextPiece(nextPiece) {
     const nextCanvas = document.getElementById('nextPieceCanvas');
@@ -100,6 +104,8 @@ function play_game(ROWS, COLS) {
     currentPiece = newPiece();
     nextPiece = newPiece();
     drawNextPiece(nextPiece); 
+
+    setavoltar.style.display = "block";
 
     function clock() {
         const timeElement = document.getElementById('time');
