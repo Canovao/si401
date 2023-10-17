@@ -68,9 +68,7 @@ const PIECES = [
 ]
 
 var setavoltar = document.getElementById("seta-voltar");
-
-        // Para tornar o botão invisível
-        setavoltar.style.display = "none";
+setavoltar.style.display = "none";
 
 function drawNextPiece(nextPiece) {
     const nextCanvas = document.getElementById('nextPieceCanvas');
@@ -100,6 +98,7 @@ function play_game(ROWS, COLS) {
     const points = document.getElementById('points')
     const level = document.getElementById('level')
     const lines = document.getElementById('lines')
+    const timeElement = document.getElementById('time')
    
     currentPiece = newPiece();
     nextPiece = newPiece();
@@ -108,10 +107,9 @@ function play_game(ROWS, COLS) {
     setavoltar.style.display = "block";
 
     function clock() {
-        const timeElement = document.getElementById('time');
-        const currentTime = timeElement.innerText.split(':');
-        let minutes = parseInt(currentTime[0]);
-        let seconds = parseInt(currentTime[1]);
+        const currentTime = timeElement.innerText.split(':')
+        let minutes = parseInt(currentTime[0])
+        let seconds = parseInt(currentTime[1])
     
         seconds++;
         if (seconds >= 60) {
@@ -251,6 +249,11 @@ function play_game(ROWS, COLS) {
         }
     }
 
+    function endGame() {
+        // TODO na próxima etapa do projeto (PHP) salvar os dados da partida do jogador no banco de dados
+        window.location.href = 'endGame.html'
+    }
+
     function moveDown() {
         clearPiece();
         currentPiece.y++;
@@ -261,7 +264,7 @@ function play_game(ROWS, COLS) {
             can_remove = true
             checkLines()
             if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
-                alert('Fim do jogo!')
+                endGame()
             }
         }
     }

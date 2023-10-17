@@ -967,6 +967,32 @@ input:required:focus {
     font-weight: bolder;
 }
 
+.play-again-button {
+    margin: 0px 50px;
+    min-width: 400px;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: bolder;
+    border: none;
+    border-radius: 15px;
+    background: #FBE162;
+    text-align: center; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    float: right;
+}
+
+.play-again-button:hover {
+    background-color: white;
+    color: #ffd502;
+    box-shadow: inset 0 0 0 3px #FBE162;
+}
+
+.play-again-button a{
+    font-size: large;
+    font-weight: bolder;
+}
+
 .container-cadastro {
     width: 100%;
     height: 120vh;
