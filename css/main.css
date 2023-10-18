@@ -558,6 +558,19 @@ border:0 none;
     margin: 0 100px;
 }
 
+#seta-voltar {
+    position: absolute;
+    top: 20px; /* Define a distância do topo em pixels */
+    left: 20px; /* Define a distância da esquerda em pixels */
+    width: 50px; /* Defina a largura do botão em pixels */
+    height: 50px; /* Defina a altura do botão em pixels */
+    background-image: url('../imagens/seta-voltar.png'); /* Adicione o caminho para a sua imagem */
+    background-size: cover; /* Ajuste o dimensionamento da imagem */
+    background-repeat: no-repeat; /* Evite a repetição da imagem de fundo */
+    border: none; /* Remove a borda do botão */
+    cursor: pointer; /* Altera o cursor ao passar o mouse sobre o botão */
+}
+
 #ranking-gameboy{
     width: 80%;
     height: 700px;
@@ -950,6 +963,32 @@ input:required:focus {
 }
 
 .login-button a{
+    font-size: large;
+    font-weight: bolder;
+}
+
+.play-again-button {
+    margin: 0px 50px;
+    min-width: 400px;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: bolder;
+    border: none;
+    border-radius: 15px;
+    background: #FBE162;
+    text-align: center; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    float: right;
+}
+
+.play-again-button:hover {
+    background-color: white;
+    color: #ffd502;
+    box-shadow: inset 0 0 0 3px #FBE162;
+}
+
+.play-again-button a{
     font-size: large;
     font-weight: bolder;
 }
