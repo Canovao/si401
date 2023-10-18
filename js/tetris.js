@@ -133,9 +133,20 @@ function play_game(ROWS, COLS) {
             for (let j = 0; j < currentPiece.piece[i].length; j++) {
                 if (currentPiece.piece[i][j]) {
                     ctx.fillStyle = currentPiece.color;
-                    console.log(currentPiece, currentPiece.piece[i][j])
                     ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
                     ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+
+                    // HardDrop preview
+                    let originalY = currentPiece.y;
+                    while (!collides(currentPiece.x, currentPiece.y + 1, currentPiece.piece)) {
+                        currentPiece.y++;
+                    }
+                    ctx.fillStyle = '#000000';
+                    ctx.globalAlpha = 0.3;
+                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                    currentPiece.y = originalY;
+                    ctx.globalAlpha = 1.0;
                 }
             }
         }
