@@ -92,6 +92,11 @@ function drawNextPiece(nextPiece) {
 }
 
 function play_game(ROWS, COLS) {    
+    document.body.style.overflow = "hidden";
+    document.body.style.margin = "0px";
+    document.body.style.padding = "0px";
+    document.body.style.position = "fixed";
+
     var remaining_points = 300
     var can_remove = true
 
@@ -133,9 +138,20 @@ function play_game(ROWS, COLS) {
             for (let j = 0; j < currentPiece.piece[i].length; j++) {
                 if (currentPiece.piece[i][j]) {
                     ctx.fillStyle = currentPiece.color;
-                    console.log(currentPiece, currentPiece.piece[i][j])
                     ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
                     ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+
+                    // HardDrop preview
+                    let originalY = currentPiece.y;
+                    while (!collides(currentPiece.x, currentPiece.y + 1, currentPiece.piece)) {
+                        currentPiece.y++;
+                    }
+                    ctx.fillStyle = '#000000';
+                    ctx.globalAlpha = 0.3;
+                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                    currentPiece.y = originalY;
+                    ctx.globalAlpha = 1.0;
                 }
             }
         }
@@ -374,7 +390,6 @@ function play_game(ROWS, COLS) {
                     linesToRemove.push(i)
                     if(hasSpecialPiece(i)){
                         mirrorBoard()
-                        boardInverted = !boardInverted;
                     }
                 } 
             }
@@ -406,6 +421,7 @@ function play_game(ROWS, COLS) {
         for (let i = 0; i < ROWS; i++) {
             board[i].reverse();
         }
+        boardInverted = !boardInverted;
     }
 
     document.addEventListener('keydown', event => {

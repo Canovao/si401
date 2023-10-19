@@ -555,7 +555,7 @@ border:0 none;
 #game-board-size-selector button{
     width: 500px;
     padding: 30px;
-    margin: 0 100px;
+    margin: 25px 100px;
 }
 
 #seta-voltar {
@@ -633,7 +633,7 @@ border:0 none;
 .tetris_content{
     display: none;
     grid-template-columns: repeat(3,1fr);
-    padding: 0 10% 0 10%;
+    padding: 1% 10% 1% 10%;
 }
 
 .tetris-list{
