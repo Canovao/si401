@@ -633,7 +633,7 @@ border:0 none;
 .tetris_content{
     display: none;
     grid-template-columns: repeat(3,1fr);
-    padding: 1.5% 10% 1.5% 10%;
+    padding: 1% 10% 1% 10%;
 }
 
 .tetris-list{

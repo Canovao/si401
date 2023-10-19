@@ -92,6 +92,11 @@ function drawNextPiece(nextPiece) {
 }
 
 function play_game(ROWS, COLS) {    
+    document.body.style.overflow = "hidden";
+    document.body.style.margin = "0px";
+    document.body.style.padding = "0px";
+    document.body.style.position = "fixed";
+
     var remaining_points = 300
     var can_remove = true
 
@@ -385,7 +390,6 @@ function play_game(ROWS, COLS) {
                     linesToRemove.push(i)
                     if(hasSpecialPiece(i)){
                         mirrorBoard()
-                        boardInverted = !boardInverted;
                     }
                 } 
             }
@@ -417,6 +421,7 @@ function play_game(ROWS, COLS) {
         for (let i = 0; i < ROWS; i++) {
             board[i].reverse();
         }
+        boardInverted = !boardInverted;
     }
 
     document.addEventListener('keydown', event => {
