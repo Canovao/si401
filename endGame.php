@@ -1,8 +1,12 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
 		<link rel="icon" href="imagens/logounicamp.png" type="image/png">
-		<title>Mirror Tetris - Perfil</title>
+		<title>Mirror Tetris - Menu</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/main.css">
 	</head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,13 +38,13 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
@@ -48,47 +52,85 @@
 				</header>
 			</div>
 			<!-- FIM HEADERS -->
-			<!-- CONTEUDO -->
-			<div class="container-login">
-				<div class="box-perfil">
-					<h1>Conta</h1>
-					<div class="image">
-						<img class="img-conta" src="imagens/lick.jpg" alt="foto de perfil">
-						<h2  class="nome-perfil"><span>Nome<span class='spacer'></span></span></h2>
-					</div>
-					<div class="wrap-information">
-						<span class="information">Nome Completo:</span>
-					</div>
-					<div class="wrap-information">
-						<span class="information">Username:					
-							<sub class="nao-alterar">*Não pode ser alterado!</sub>
-						</span>
-					</div>
-
-					<div class="wrap-information">
-						<span class="information">Email:</span>
-					</div>
-					<div class="wrap-information">
-						<span class="information">Telefone:</span>
-					</div>
-					<div class="wrap-information">
-						<span class="information">CPF:
-							<sub class="nao-alterar">*Não pode ser alterado!</sub>
-						</span>
-					</div>
-
-					<div class="wrap-information">
-						<span class="information">Data de Nascimento:
-							<sub class="nao-alterar">*Não pode ser alterado!</sub>
-						</span>
-					</div>
-
-					<div class="wrap-input"> 
-                        <a class="login-button no-decoration" >Editar</a>
-                    </div>
-				</div>
-			</div>
-			<!-- FIM CONTEUDO-->
+			<!-- CONTEÚDO -->
+			<section class="titulo_body">
+				<table class="tetris-list">
+					<tr>
+						<td>
+							<div>
+								<h1 class="titulo_body">RANKING PESSOAL</h1>
+								<div class="container-ranking">
+									<table class="tabela-rank-pessoal">
+										<thead>
+											<tr>
+												<th>Nome</th>
+												<th>Pontuação</th>
+												<th>Nível</th>
+												<th>Tempo</th>
+											</tr>
+										</thead>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+										<tr>
+											<td>Joãozinho</td>
+											<td>10.000</td>
+											<td>16</td>
+											<td>00:03:00</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</td>
+						<td>
+							<h2>Fim de Jogo!</h2>
+							<div>
+								<a class="play-again-button no-decoration" href="jogo.php">Jogar Novamente</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<!-- FIM CONTEÚDO -->
 			<!-- FOOTER -->
 			<div class="footer_container">
 				<section class="footer_content ">

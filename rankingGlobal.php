@@ -1,8 +1,12 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 	<head>
 		<link rel="icon" href="imagens/logounicamp.png" type="image/png">
-		<title>Mirror Tetris - Menu</title>
+		<title>Mirror Tetris - Ranking</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/main.css">
 	</head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,63 +38,106 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
 					</nav>
 				</header>
 			</div>
-			<!-- FIM HEADERS -->
-			<!-- CONTEUDO -->
-			<section class="container-menu">
-				<div class="menu-bemvindo">
-					<h1>Bem-vindo, Jogador!</h1>
+		</div>
+		<!-- FIM HEADERS -->
+		<!-- CONTEUDO -->
+		<div class="container-tetris">
+			<div id="ranking-gameboy">
+				<div class="title-ranking">
+					<h1 class="title-ranking">10 MELHORES JOGADORES</h1>
 				</div>
-				<a class="glow-on-hover-jogar" href="jogo.html" id="jogar">Jogue Agora!</a>
-			</section>
-			<div class="container">
-				<div class="container-lado-lado ">
-					<div class="bloco_body">
-						<div>
-						<p class="titulo_body">
-							Tutorial: Tetris
-						</p>
-						<p class="body_texto">
-							Tetris é um jogo muito popular em que o jogador deve rotacionar e encaixar peças (chamadas Tetriminos) que caem da parte superior de um tabuleiro com uma certa velocidade. O objetivo final do jogo é preencher totalmente o maior número possível de linhas horizontais pois, uma vez preenchidas, estas linhas desaparecem e o jogador ganha mais espaço no tabuleiro para continuar a tarefa, somando pontos no processo. Com o passar o tempo, geralmente a velocidade de queda das peças aumenta, tornando o jogo gradualmente mais difícil. A partida termina quando não há mais espaço no tabuleiro para acomodar novas peças.
-
-						</p>
-						</div>
-					</div>
-					<div class="bloco_anuncio">
-						<img class="imagem-inblock" src="imagens/eliminandolinha.gif" alt="Gif Consoles Nintendo">
-					</div>
+				<div class="seu-ranking">
+					<p class="seu-ranking">SEU RANKING: 243°</p>
+				</div>
+				<div id="ranking">
+					<table class="tabela-body">
+						<thead>
+							<tr>
+								<th>Rank</th>
+								<th>Username</th>
+								<th>Pontuação</th>
+								<th>Nível</th>
+							</tr>
+						</thead>
+						<tr>
+							<td>1°</td>
+							<td>Joãozinho</td>
+							<td>10.000</td>
+							<td>16</td>
+						</tr>
+						<tr>
+							<td>2°</td>
+							<td>Joãozinho</td>
+							<td>9.000</td>
+							<td>12</td>
+						</tr>
+						<tr>
+							<td>3°</td>
+							<td>Joãozinho</td>
+							<td>8.000</td>
+							<td>11</td>
+						</tr>
+						<tr>
+							<td>4°</td>
+							<td>Joãozinho</td>
+							<td>7.000</td>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>5°</td>
+							<td>Joãozinho</td>
+							<td>6.000</td>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td>6º</td>
+							<td>Joãozinho</td>
+							<td>5.000</td>
+							<td>7</td>
+						</tr>
+						<tr>
+							<td>7°</td>
+							<td>Joãozinho</td>
+							<td>4.000</td>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>8°</td>
+							<td>Joãozinho</td>
+							<td>3.000</td>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>9°</td>
+							<td>Joãozinho</td>
+							<td>2.000</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>10°</td>
+							<td>Joãozinho</td>
+							<td>1.000</td>
+							<td>3</td>
+						</tr>
+					</table>
 				</div>
 			</div>
-			<div class="container">
-				<div class="container-lado-lado ">
-					<div class="bloco_anuncio">
-						<img class="imagem-inblock" style="margin-left: 30%;" src="imagens/reverse.png" alt="Tetris com Os Simpsons">
-					</div>
-					<div class="bloco_body">
-						<div>
-						<p class="titulo_body">
-							Peça Mirror:
-						</p>
-						<p class="body_texto">
-							Ao longo da partida e de maneira aleatória podem surgir peças especiais que, quando compõem uma linha eliminada, provocam o espelhamento do tabuleiro em relação ao eixo vertical (vide Figura 2). Ou seja, o jogador passa a enxergar o tabuleiro como se ele estivesse em um "espelho" (ou do "lado de dentro" da tela), o que aumenta a dificuldade da partida, uma vez que, além da alteração na posição das peças, os controles de deslocamento (esquerda e direita) ficam "invertidos". Este comportamento de espelhamento se repete toda vez que uma peça especial esteja presente em uma linha eliminada.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- FIM CONTEUDO-->
-			<!-- FOOTER -->
+		</div>
+		<!-- FIM CONTEUDO-->
+		<!-- FOOTER -->
 			<div class="footer_container">
 				<section class="footer_content ">
 					<ul class="footer-list">
@@ -161,14 +208,13 @@
 						</li>
 					</ul>
 				</section>
-					<footer class="footer_section">
-						<p>
-							&copy; Todos os Direitos Reservados para 
-							<a href="https://www.ft.unicamp.br/">Faculdade de Tecnologia - Unicamp</a>
-						</p>		
-					</footer>
+				<footer class="footer_section">
+					<p>
+						&copy; Todos os Direitos Reservados para 
+						<a href="https://www.ft.unicamp.br/">Faculdade de Tecnologia - Unicamp</a>
+					</p>		
+				</footer>
 			</div>	
 			<!-- FIM FOOTER -->
-		</div>
 	</body>
 </html>

@@ -1,3 +1,7 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,13 +38,13 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
@@ -48,85 +52,48 @@
 				</header>
 			</div>
 			<!-- FIM HEADERS -->
-			<!-- CONTEÚDO -->
-			<section class="titulo_body">
-				<table class="tetris-list">
-					<tr>
-						<td>
-							<div>
-								<h1 class="titulo_body">RANKING PESSOAL</h1>
-								<div class="container-ranking">
-									<table class="tabela-rank-pessoal">
-										<thead>
-											<tr>
-												<th>Nome</th>
-												<th>Pontuação</th>
-												<th>Nível</th>
-												<th>Tempo</th>
-											</tr>
-										</thead>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</td>
-						<td>
-							<h2>Fim de Jogo!</h2>
-							<div>
-								<a class="play-again-button no-decoration" href="jogo.html">Jogar Novamente</a>
-							</div>
-						</td>
-					</tr>
-				</table>
+			<!-- CONTEUDO -->
+			<section class="container-menu">
+				<div class="menu-bemvindo">
+					<h1>Bem-vindo, Jogador!</h1>
+				</div>
+				<a class="glow-on-hover-jogar" href="jogo.php" id="jogar">Jogue Agora!</a>
 			</section>
-			<!-- FIM CONTEÚDO -->
+			<div class="container">
+				<div class="container-lado-lado ">
+					<div class="bloco_body">
+						<div>
+						<p class="titulo_body">
+							Tutorial: Tetris
+						</p>
+						<p class="body_texto">
+							Tetris é um jogo muito popular em que o jogador deve rotacionar e encaixar peças (chamadas Tetriminos) que caem da parte superior de um tabuleiro com uma certa velocidade. O objetivo final do jogo é preencher totalmente o maior número possível de linhas horizontais pois, uma vez preenchidas, estas linhas desaparecem e o jogador ganha mais espaço no tabuleiro para continuar a tarefa, somando pontos no processo. Com o passar o tempo, geralmente a velocidade de queda das peças aumenta, tornando o jogo gradualmente mais difícil. A partida termina quando não há mais espaço no tabuleiro para acomodar novas peças.
+
+						</p>
+						</div>
+					</div>
+					<div class="bloco_anuncio">
+						<img class="imagem-inblock" src="imagens/eliminandolinha.gif" alt="Gif Consoles Nintendo">
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="container-lado-lado ">
+					<div class="bloco_anuncio">
+						<img class="imagem-inblock" style="margin-left: 30%;" src="imagens/reverse.png" alt="Tetris com Os Simpsons">
+					</div>
+					<div class="bloco_body">
+						<div>
+						<p class="titulo_body">
+							Peça Mirror:
+						</p>
+						<p class="body_texto">
+							Ao longo da partida e de maneira aleatória podem surgir peças especiais que, quando compõem uma linha eliminada, provocam o espelhamento do tabuleiro em relação ao eixo vertical (vide Figura 2). Ou seja, o jogador passa a enxergar o tabuleiro como se ele estivesse em um "espelho" (ou do "lado de dentro" da tela), o que aumenta a dificuldade da partida, uma vez que, além da alteração na posição das peças, os controles de deslocamento (esquerda e direita) ficam "invertidos". Este comportamento de espelhamento se repete toda vez que uma peça especial esteja presente em uma linha eliminada.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- FIM CONTEUDO-->
 			<!-- FOOTER -->
 			<div class="footer_container">
 				<section class="footer_content ">

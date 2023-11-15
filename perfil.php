@@ -1,8 +1,12 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 	<head>
 		<link rel="icon" href="imagens/logounicamp.png" type="image/png">
-		<title>Mirror Tetris - Ranking</title>
+		<title>Mirror Tetris - Perfil</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/main.css">
 	</head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,106 +38,82 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
 					</nav>
 				</header>
 			</div>
-		</div>
-		<!-- FIM HEADERS -->
-		<!-- CONTEUDO -->
-		<div class="container-tetris">
-			<div id="ranking-gameboy">
-				<div class="title-ranking">
-					<h1 class="title-ranking">10 MELHORES JOGADORES</h1>
-				</div>
-				<div class="seu-ranking">
-					<p class="seu-ranking">SEU RANKING: 243°</p>
-				</div>
-				<div id="ranking">
-					<table class="tabela-body">
-						<thead>
-							<tr>
-								<th>Rank</th>
-								<th>Username</th>
-								<th>Pontuação</th>
-								<th>Nível</th>
-							</tr>
-						</thead>
-						<tr>
-							<td>1°</td>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-						</tr>
-						<tr>
-							<td>2°</td>
-							<td>Joãozinho</td>
-							<td>9.000</td>
-							<td>12</td>
-						</tr>
-						<tr>
-							<td>3°</td>
-							<td>Joãozinho</td>
-							<td>8.000</td>
-							<td>11</td>
-						</tr>
-						<tr>
-							<td>4°</td>
-							<td>Joãozinho</td>
-							<td>7.000</td>
-							<td>9</td>
-						</tr>
-						<tr>
-							<td>5°</td>
-							<td>Joãozinho</td>
-							<td>6.000</td>
-							<td>8</td>
-						</tr>
-						<tr>
-							<td>6º</td>
-							<td>Joãozinho</td>
-							<td>5.000</td>
-							<td>7</td>
-						</tr>
-						<tr>
-							<td>7°</td>
-							<td>Joãozinho</td>
-							<td>4.000</td>
-							<td>6</td>
-						</tr>
-						<tr>
-							<td>8°</td>
-							<td>Joãozinho</td>
-							<td>3.000</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>9°</td>
-							<td>Joãozinho</td>
-							<td>2.000</td>
-							<td>4</td>
-						</tr>
-						<tr>
-							<td>10°</td>
-							<td>Joãozinho</td>
-							<td>1.000</td>
-							<td>3</td>
-						</tr>
-					</table>
-				</div>
+			<!-- FIM HEADERS -->
+			<!-- CONTEUDO -->
+			<div class="container-login">
+				<?php
+					try {
+						$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+				
+						$stmt = $conn->query("SELECT * FROM jogadores WHERE username = '" . $_SESSION["username"] . "'");
+						$result = $stmt->fetch(PDO::FETCH_ASSOC);
+						$nome = $result["nome_completo"];
+						$username = $result["username"];
+						$email = $result["email"];
+						$telefone = $result["telefone"];
+						$cpf = $result["cpf"];
+						$data_nascimento = $result["data_nascimento"];
+
+						echo '
+							<div class="box-perfil">
+								<h1>Conta</h1>
+								<div class="image">
+									<img class="img-conta" src="imagens/lick.jpg" alt="foto de perfil">
+									<h2  class="nome-perfil"><span>Nome<span class="spacer"></span></span></h2>
+								</div>
+								<div class="wrap-information">
+									<span class="information">Nome Completo: '. $nome .'</span>
+								</div>
+								<div class="wrap-information">
+									<span class="information">Username: '. $username .'					
+										<sub class="nao-alterar">*Não pode ser alterado!</sub>
+									</span>
+								</div>
+			
+								<div class="wrap-information">
+									<span class="information">Email: '. $email .'</span>
+								</div>
+								<div class="wrap-information">
+									<span class="information">Telefone: '. $telefone .'</span>
+								</div>
+								<div class="wrap-information">
+									<span class="information">CPF: '. $cpf .'
+										<sub class="nao-alterar">*Não pode ser alterado!</sub>
+									</span>
+								</div>
+			
+								<div class="wrap-information">
+									<span class="information">Data de Nascimento: '. $data_nascimento .'
+										<sub class="nao-alterar">*Não pode ser alterado!</sub>
+									</span>
+								</div>
+			
+								<div class="wrap-input"> 
+									<a class="login-button no-decoration" >Editar</a>
+								</div>
+							</div>
+						';
+					} catch(PDOException $e) {
+						echo "Ocorreu um erro: " . $e->getMessage();
+					}
+				?>
+
 			</div>
-		</div>
-		<!-- FIM CONTEUDO-->
-		<!-- FOOTER -->
+			<!-- FIM CONTEUDO-->
+			<!-- FOOTER -->
 			<div class="footer_container">
 				<section class="footer_content ">
 					<ul class="footer-list">
@@ -204,13 +184,14 @@
 						</li>
 					</ul>
 				</section>
-				<footer class="footer_section">
-					<p>
-						&copy; Todos os Direitos Reservados para 
-						<a href="https://www.ft.unicamp.br/">Faculdade de Tecnologia - Unicamp</a>
-					</p>		
-				</footer>
+					<footer class="footer_section">
+						<p>
+							&copy; Todos os Direitos Reservados para 
+							<a href="https://www.ft.unicamp.br/">Faculdade de Tecnologia - Unicamp</a>
+						</p>		
+					</footer>
 			</div>	
 			<!-- FIM FOOTER -->
+		</div>
 	</body>
 </html>
