@@ -19,7 +19,7 @@
         `username` TEXT(20) NOT NULL ,
         `pontuacao` INT NOT NULL,
         `nivel` INT NOT NULL,
-        PRIMARY KEY (`id_rank`(255))) ENGINE = InnoDB";
+        PRIMARY KEY (`id_rank`)) ENGINE = InnoDB";
         
         $conn->exec($sql);
     } catch(PDOException $e) {

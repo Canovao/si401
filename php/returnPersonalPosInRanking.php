@@ -1,6 +1,6 @@
 <?php
 try {
-    $username = $_POST["username"];
+    $username = $_SESSION["username"];
 
     $conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
 
