@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     try {
         $conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
 
@@ -12,7 +14,7 @@
             
             echo "Player criado com sucesso";  
 
-            header('Location: menu.php');
+            header('Location: ../menu.php');
         }
     } catch(PDOException $e) {
         echo "Ocorreu um erro: " . $e->getMessage();

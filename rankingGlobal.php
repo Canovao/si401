@@ -55,14 +55,38 @@
 		<!-- FIM HEADERS -->
 		<!-- CONTEUDO -->
 		<div class="container-tetris">
-			<div id="ranking-gameboy">
+			<div class="ranking-gameboy">
 				<div class="title-ranking">
-					<h1 class="title-ranking">10 MELHORES JOGADORES</h1>
+					<h1 class="title-ranking">10 MELHORES PARTIDAS</h1>
 				</div>
 				<div class="seu-ranking">
-					<p class="seu-ranking">SEU RANKING: 243°</p>
+					<p class="seu-ranking">
+						<!-- YOUR POS IN RANKING -->
+						<?php
+							try {
+								$username = $_SESSION["username"];
+
+								$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+
+								$stmt = $conn->query("SELECT * FROM ranking ORDER BY pontuacao DESC");
+
+								$pos = 0;
+
+								while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+									$pos++;
+									if ($row["username"] == $username){
+										break;
+									}
+								}
+
+								echo "Seu ranking: " . $pos . "º";
+							} catch(PDOException $e) {
+								echo "Ocorreu um erro: " . $e->getMessage();
+							}
+						?>
+					</p>
 				</div>
-				<div id="ranking">
+				<div class="ranking">
 					<table class="tabela-body">
 						<thead>
 							<tr>
@@ -72,66 +96,74 @@
 								<th>Nível</th>
 							</tr>
 						</thead>
-						<tr>
-							<td>1°</td>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-						</tr>
-						<tr>
-							<td>2°</td>
-							<td>Joãozinho</td>
-							<td>9.000</td>
-							<td>12</td>
-						</tr>
-						<tr>
-							<td>3°</td>
-							<td>Joãozinho</td>
-							<td>8.000</td>
-							<td>11</td>
-						</tr>
-						<tr>
-							<td>4°</td>
-							<td>Joãozinho</td>
-							<td>7.000</td>
-							<td>9</td>
-						</tr>
-						<tr>
-							<td>5°</td>
-							<td>Joãozinho</td>
-							<td>6.000</td>
-							<td>8</td>
-						</tr>
-						<tr>
-							<td>6º</td>
-							<td>Joãozinho</td>
-							<td>5.000</td>
-							<td>7</td>
-						</tr>
-						<tr>
-							<td>7°</td>
-							<td>Joãozinho</td>
-							<td>4.000</td>
-							<td>6</td>
-						</tr>
-						<tr>
-							<td>8°</td>
-							<td>Joãozinho</td>
-							<td>3.000</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>9°</td>
-							<td>Joãozinho</td>
-							<td>2.000</td>
-							<td>4</td>
-						</tr>
-						<tr>
-							<td>10°</td>
-							<td>Joãozinho</td>
-							<td>1.000</td>
-							<td>3</td>
-						</tr>
+						<!-- TOP 10 -->
+						<?php
+							try {
+								$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+
+								$stmt = $conn->query("SELECT * FROM ranking ORDER BY pontuacao DESC LIMIT 10");
+
+								$top10 = 1;
+
+								while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+									echo "<tr>";
+									echo "<td>" . $top10 . "</td>";
+									echo "<td>" . $row["username"] . "</td>";
+									echo "<td>" . $row["pontuacao"] . "</td>";
+									echo "<td>" . $row["nivel"] . "</td>";
+									echo "</tr>";
+									$top10++;
+								}
+							} catch(PDOException $e) {
+								echo "Ocorreu um erro: " . $e->getMessage();
+							}
+						?>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-tetris">
+			<div class="ranking-gameboy">
+				<div class="title-ranking">
+					<h1 class="title-ranking">SEUS 10 MELHORES PARTIDAS</h1>
+				</div>
+				<div class="ranking">
+					<table class="tabela-body">
+						<thead>
+							<tr>
+								<th>Rank</th>
+								<th>Username</th>
+								<th>Pontuação</th>
+								<th>Nível</th>
+							</tr>
+						</thead>
+						<!-- PERSONAL RANKING -->
+						<?php
+							try {
+								$username = $_SESSION["username"];
+
+								$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+
+								$stmt = $conn->query("SELECT * FROM ranking WHERE username = " . $username . " ORDER BY pontuacao DESC LIMIT 10");
+
+								$top10 = 1;
+
+								while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+									echo "<tr>";
+									echo "<td>" . $top10 . "</td>";
+									echo "<td>" . $row["username"] . "</td>";
+									echo "<td>" . $row["pontuacao"] . "</td>";
+									echo "<td>" . $row["nivel"] . "</td>";
+									echo "</tr>";
+									$top10++;
+								}
+
+
+							} catch(PDOException $e) {
+								echo "Ocorreu um erro: " . $e->getMessage();
+							}
+						?>
 					</table>
 				</div>
 			</div>

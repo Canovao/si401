@@ -69,48 +69,51 @@
 
 						echo '
 							<div class="box-perfil">
-								<h1>Conta</h1>
-								<div class="image">
-									<img class="img-conta" src="imagens/lick.jpg" alt="foto de perfil">
-									<h2  class="nome-perfil"><span>Nome<span class="spacer"></span></span></h2>
-								</div>
-								<div class="wrap-information">
-									<span class="information">Nome Completo: '. $nome .'</span>
-								</div>
-								<div class="wrap-information">
-									<span class="information">Username: '. $username .'					
-										<sub class="nao-alterar">*Não pode ser alterado!</sub>
-									</span>
-								</div>
-			
-								<div class="wrap-information">
-									<span class="information">Email: '. $email .'</span>
-								</div>
-								<div class="wrap-information">
-									<span class="information">Telefone: '. $telefone .'</span>
-								</div>
-								<div class="wrap-information">
-									<span class="information">CPF: '. $cpf .'
-										<sub class="nao-alterar">*Não pode ser alterado!</sub>
-									</span>
-								</div>
-			
-								<div class="wrap-information">
-									<span class="information">Data de Nascimento: '. $data_nascimento .'
-										<sub class="nao-alterar">*Não pode ser alterado!</sub>
-									</span>
-								</div>
-			
-								<div class="wrap-input"> 
-									<a class="login-button no-decoration" >Editar</a>
-								</div>
+								<form action="php/updatePlayer.php" method="POST">  
+									<div class="wrap-input">
+										<span class="cadastro-title">
+											Sua Conta
+										</span>                        
+									</div>
+									
+									<div class="wrap-input">
+										<input class="input100" type="text" name="nome_completo" placeholder="'. $nome .'" value="'. $nome .'">
+									</div>
+					
+									<div class="wrap-input">
+										<input class="input100" type="email" name="email" placeholder="'. $email .'" value="'. $email .'">
+									</div>
+					
+									<div class="wrap-input">
+										<input class="input100" type="tel" name="telefone" maxlength="20" placeholder="'. $telefone .'" value="'. $telefone .'">
+									</div>
+					
+									<div class="wrap-information">
+										<span class="information">Username: '. $username .'					
+											<sub class="nao-alterar">*Não pode ser alterado!</sub>
+										</span>
+									</div>
+									<div class="wrap-information">
+										<span class="information">CPF: '. $cpf .'
+											<sub class="nao-alterar">*Não pode ser alterado!</sub>
+										</span>
+									</div>
+									<div class="wrap-information">
+										<span class="information">Data de Nascimento: '. $data_nascimento .'
+											<sub class="nao-alterar">*Não pode ser alterado!</sub>
+										</span>
+									</div>
+					
+									<div class="wrap-input">
+										<button type="submit" class="login-button no-decoration">Editar</button>
+									</div>
+								</form>
 							</div>
 						';
 					} catch(PDOException $e) {
 						echo "Ocorreu um erro: " . $e->getMessage();
 					}
 				?>
-
 			</div>
 			<!-- FIM CONTEUDO-->
 			<!-- FOOTER -->

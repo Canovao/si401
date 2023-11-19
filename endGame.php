@@ -63,60 +63,38 @@
 									<table class="tabela-rank-pessoal">
 										<thead>
 											<tr>
-												<th>Nome</th>
+												<th>Rank</th>
+												<th>Username</th>
 												<th>Pontuação</th>
 												<th>Nível</th>
-												<th>Tempo</th>
 											</tr>
 										</thead>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
-										<tr>
-											<td>Joãozinho</td>
-											<td>10.000</td>
-											<td>16</td>
-											<td>00:03:00</td>
-										</tr>
+										<!-- PERSONAL RANKING -->
+										<?php
+											try {
+												$username = $_SESSION["username"];
+
+												$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+
+												$stmt = $conn->query("SELECT * FROM ranking WHERE username = " . $username . " ORDER BY pontuacao DESC LIMIT 10");
+
+												$top10 = 1;
+
+												while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+													echo "<tr>";
+													echo "<td>" . $top10 . "</td>";
+													echo "<td>" . $row["username"] . "</td>";
+													echo "<td>" . $row["pontuacao"] . "</td>";
+													echo "<td>" . $row["nivel"] . "</td>";
+													echo "</tr>";
+													$top10++;
+												}
+
+
+											} catch(PDOException $e) {
+												echo "Ocorreu um erro: " . $e->getMessage();
+											}
+										?>
 									</table>
 								</div>
 							</div>

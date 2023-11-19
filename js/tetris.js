@@ -1,7 +1,7 @@
-let currentPiece, nextPiece;
-let ctx;
-const canvas = document.getElementById('tetrisCanvas');
-ctx = canvas.getContext('2d'); // Inicialize ctx aqui
+let currentPiece, nextPiece
+let ctx
+const canvas = document.getElementById('tetrisCanvas')
+ctx = canvas.getContext('2d') // Inicialize ctx aqui
 
 const PIECES = [
     {
@@ -67,35 +67,35 @@ const PIECES = [
     }
 ]
 
-var setavoltar = document.getElementById("seta-voltar");
-setavoltar.style.display = "none";
+var setavoltar = document.getElementById("seta-voltar")
+setavoltar.style.display = "none"
 
 function drawNextPiece(nextPiece) {
-    const nextCanvas = document.getElementById('nextPieceCanvas');
-    const ctx = nextCanvas.getContext('2d');
-    ctx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+    const nextCanvas = document.getElementById('nextPieceCanvas')
+    const ctx = nextCanvas.getContext('2d')
+    ctx.clearRect(0, 0, nextCanvas.width, nextCanvas.height)
 
-    const piece = nextPiece.piece;
-    const cellSize = 30; // Tamanho das células do canvas
-    const xOffset = (nextCanvas.width - piece[0].length * cellSize) / 2;
-    const yOffset = (nextCanvas.height - piece.length * cellSize) / 2;
+    const piece = nextPiece.piece
+    const cellSize = 30 // Tamanho das células do canvas
+    const xOffset = (nextCanvas.width - piece[0].length * cellSize) / 2
+    const yOffset = (nextCanvas.height - piece.length * cellSize) / 2
 
     for (let i = 0; i < piece.length; i++) {
         for (let j = 0; j < piece[i].length; j++) {
             if (piece[i][j]) {
-                ctx.fillStyle = nextPiece.color;
-                ctx.fillRect(xOffset + j * cellSize, yOffset + i * cellSize, cellSize, cellSize);
-                ctx.strokeRect(xOffset + j * cellSize, yOffset + i * cellSize, cellSize, cellSize);
+                ctx.fillStyle = nextPiece.color
+                ctx.fillRect(xOffset + j * cellSize, yOffset + i * cellSize, cellSize, cellSize)
+                ctx.strokeRect(xOffset + j * cellSize, yOffset + i * cellSize, cellSize, cellSize)
             }
         }
     }
 }
 
 function play_game(ROWS, COLS) {    
-    document.body.style.overflow = "hidden";
-    document.body.style.margin = "0px";
-    document.body.style.padding = "0px";
-    document.body.style.position = "fixed";
+    document.body.style.overflow = "hidden"
+    document.body.style.margin = "0px"
+    document.body.style.padding = "0px"
+    document.body.style.position = "fixed"
 
     var remaining_points = 300
     var can_remove = true
@@ -105,73 +105,73 @@ function play_game(ROWS, COLS) {
     const lines = document.getElementById('lines')
     const timeElement = document.getElementById('time')
    
-    currentPiece = newPiece();
-    nextPiece = newPiece();
-    drawNextPiece(nextPiece); 
+    currentPiece = newPiece()
+    nextPiece = newPiece()
+    drawNextPiece(nextPiece) 
 
-    setavoltar.style.display = "block";
+    setavoltar.style.display = "block"
 
     function clock() {
         const currentTime = timeElement.innerText.split(':')
         let minutes = parseInt(currentTime[0])
         let seconds = parseInt(currentTime[1])
     
-        seconds++;
+        seconds++
         if (seconds >= 60) {
-            seconds = 0;
-            minutes++;
+            seconds = 0
+            minutes++
         }
     
-        const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        timeElement.innerText = formattedTime;
+        const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        timeElement.innerText = formattedTime
     
-        setTimeout(clock, 1000);
+        setTimeout(clock, 1000)
     }
 
-    let board = [];
+    let board = []
     for (let i = 0; i < ROWS; i++) {
-        board.push(new Array(COLS).fill(0));
+        board.push(new Array(COLS).fill(0))
     }
 
     function drawPiece() {
         for (let i = 0; i < currentPiece.piece.length; i++) {
             for (let j = 0; j < currentPiece.piece[i].length; j++) {
                 if (currentPiece.piece[i][j]) {
-                    ctx.fillStyle = currentPiece.color;
-                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
-                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
+                    ctx.fillStyle = currentPiece.color
+                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20)
+                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20)
 
                     // HardDrop preview
-                    let originalY = currentPiece.y;
+                    let originalY = currentPiece.y
                     while (!collides(currentPiece.x, currentPiece.y + 1, currentPiece.piece)) {
-                        currentPiece.y++;
+                        currentPiece.y++
                     }
-                    ctx.fillStyle = '#000000';
-                    ctx.globalAlpha = 0.3;
-                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
-                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20);
-                    currentPiece.y = originalY;
-                    ctx.globalAlpha = 1.0;
+                    ctx.fillStyle = '#000000'
+                    ctx.globalAlpha = 0.3
+                    ctx.fillRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20)
+                    ctx.strokeRect((currentPiece.x + j) * 20, (currentPiece.y + i) * 20, 20, 20)
+                    currentPiece.y = originalY
+                    ctx.globalAlpha = 1.0
                 }
             }
         }
     }
 
     function generateNewPiece() {
-        currentPiece = nextPiece;
-        nextPiece = newPiece();
-        drawNextPiece(nextPiece); // Atualize a próxima peça
+        currentPiece = nextPiece
+        nextPiece = newPiece()
+        drawNextPiece(nextPiece) // Atualize a próxima peça
     }
 
 
     function newPiece() {
-        const piece = PIECES[Math.floor(Math.random() * PIECES.length)];
+        const piece = PIECES[Math.floor(Math.random() * PIECES.length)]
         return {
             piece: piece.shape,
             x: Math.floor(COLS / 2) - Math.floor(piece.shape[0].length / 2),
             y: 0, 
             color: piece.color
-        };
+        }
     }
         
     const tetris_content = document.getElementById('tetris_content')
@@ -187,69 +187,70 @@ function play_game(ROWS, COLS) {
         for (let i = 0; i < piece.length; i++) {
             for (let j = 0; j < piece[i].length; j++) {
                 if (piece[i][j] && (board[y + i] && board[y + i][x + j]) !== 0) {
-                    return true;
+                    return true
                 }
             }
         }
-        return false;
+        return false
     }
 
     function drawBoard() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
         for (let i = 0; i < ROWS; i++) {
             for (let j = 0; j < COLS; j++) {
                 if (board[i][j] !== 0) {
                     if(board[i][j] === 1){
-                        ctx.fillStyle = '#000000';
+                        ctx.fillStyle = '#000000'
                     } else{
-                        ctx.fillStyle = '#FFD700'; // Usar a cor original da peça,
+                        ctx.fillStyle = '#FFD700' // Usar a cor original da peça,
                     }
                     
-                    ctx.fillRect(j * 20, i * 20, 20, 20);
-                    ctx.strokeRect(j * 20, i * 20, 20, 20);
+                    ctx.fillRect(j * 20, i * 20, 20, 20)
+                    ctx.strokeRect(j * 20, i * 20, 20, 20)
                 }
             }
         }
     }
 
     function drawBoardWithBorder() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
 
         // Define a cor e a espessura da borda do tabuleiro
-        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        gradient.addColorStop(0, '#ff0000');
-        gradient.addColorStop(0.1, '#ff7300');
-        gradient.addColorStop(0.2, '#fffb00');
-        gradient.addColorStop(0.3, '#48ff00');
-        gradient.addColorStop(0.4, '#00ffd5');
-        gradient.addColorStop(0.5, '#002bff');
-        gradient.addColorStop(0.6, '#7a00ff');
-        gradient.addColorStop(0.7, '#ff00c8');
-        gradient.addColorStop(1, '#ff0000');
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
+        gradient.addColorStop(0, '#ff0000')
+        gradient.addColorStop(0.1, '#ff7300')
+        gradient.addColorStop(0.2, '#fffb00')
+        gradient.addColorStop(0.3, '#48ff00')
+        gradient.addColorStop(0.4, '#00ffd5')
+        gradient.addColorStop(0.5, '#002bff')
+        gradient.addColorStop(0.6, '#7a00ff')
+        gradient.addColorStop(0.7, '#ff00c8')
+        gradient.addColorStop(1, '#ff0000')
 
         // Defina o gradiente como estilo de borda
-        ctx.strokeStyle = gradient;        ctx.lineWidth = 3; // Espessura da borda do tabuleiro
+        ctx.strokeStyle = gradient        
+        ctx.lineWidth = 3 // Espessura da borda do tabuleiro
 
         // Desenha a borda do tabuleiro
-        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeRect(0, 0, canvas.width, canvas.height)
 
         // Define a cor da borda das peças
-        ctx.strokeStyle = 'black'; // Cor da borda das peças
-        ctx.lineWidth = 1; // Espessura da borda das peças
+        ctx.strokeStyle = 'black' // Cor da borda das peças
+        ctx.lineWidth = 1 // Espessura da borda das peças
 
         // Desenha as peças no tabuleiro
         for (let i = 0; i < ROWS; i++) {
             for (let j = 0; j < COLS; j++) {
                 if (board[i][j] !== 0) {
                     if(board[i][j] === 1){
-                        ctx.fillStyle = '#000000';
+                        ctx.fillStyle = '#000000'
                     } else{
-                        ctx.fillStyle = '#FFD700';
+                        ctx.fillStyle = '#FFD700'
                     }
-                    ctx.fillRect(j * 20, i * 20, 20, 20);
+                    ctx.fillRect(j * 20, i * 20, 20, 20)
 
                     // Desenhe a borda das peças sem afetar a cor da borda do tabuleiro
-                    ctx.strokeRect(j * 20, i * 20, 20, 20);
+                    ctx.strokeRect(j * 20, i * 20, 20, 20)
                 }
             }
         }
@@ -259,7 +260,7 @@ function play_game(ROWS, COLS) {
         for (let i = 0; i < currentPiece.piece.length; i++) {
             for (let j = 0; j < currentPiece.piece[i].length; j++) {
                 if (currentPiece.piece[i][j]) {
-                    board[currentPiece.y + i][currentPiece.x + j] = 0;
+                    board[currentPiece.y + i][currentPiece.x + j] = 0
                 }
             }
         }
@@ -269,21 +270,34 @@ function play_game(ROWS, COLS) {
         const formData = new FormData();
         formData.append("pontuacao", parseInt(points.innerText));
         formData.append("nivel", parseInt(level.innerText));
-
-        const response = await fetch(window.location.hostname + '/php/saveTetrisGame.php', {
-            method: "POST",
-            body: formData,
-        });
-        window.location.href = 'endGame.html'
+    
+        var xhr = new XMLHttpRequest();
+    
+        xhr.open('POST', '/php/saveTetrisGame.php', true);
+    
+        xhr.onload = function() {
+            if (xhr.status == 200) {
+                window.location.href = 'endGame.php'
+            } else {
+                console.error("Error:", xhr.statusText);
+            }
+        };
+    
+        xhr.onerror = function() {
+            console.error("Network error occurred");
+        };
+    
+        xhr.send(formData);
     }
+    
 
     function moveDown() {
-        clearPiece();
-        currentPiece.y++;
+        clearPiece()
+        currentPiece.y++
         if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
-            currentPiece.y--;
-            placePiece();
-            generateNewPiece();
+            currentPiece.y--
+            placePiece()
+            generateNewPiece()
             can_remove = true
             checkLines()
             if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
@@ -293,33 +307,33 @@ function play_game(ROWS, COLS) {
     }
 
     function moveLeft() {
-        clearPiece();
-        currentPiece.x--;
+        clearPiece()
+        currentPiece.x--
         if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
-            currentPiece.x++;
+            currentPiece.x++
         }
     }
 
     function moveRight() {
-        clearPiece();
-        currentPiece.x++;
+        clearPiece()
+        currentPiece.x++
         if (collides(currentPiece.x, currentPiece.y, currentPiece.piece)) {
-            currentPiece.x--;
+            currentPiece.x--
         }
     }
 
     function rotatePiece() {
-        const rotatedPiece = [];
+        const rotatedPiece = []
         for (let i = 0; i < currentPiece.piece[0].length; i++) {
-            let row = [];
+            let row = []
             for (let j = currentPiece.piece.length - 1; j >= 0; j--) {
-                row.push(currentPiece.piece[j][i]);
+                row.push(currentPiece.piece[j][i])
             }
-            rotatedPiece.push(row);
+            rotatedPiece.push(row)
         }
 
         if (!collides(currentPiece.x, currentPiece.y, rotatedPiece)) {
-            currentPiece.piece = rotatedPiece;
+            currentPiece.piece = rotatedPiece
         }
     }
 
@@ -327,9 +341,9 @@ function play_game(ROWS, COLS) {
         for (let i = 0; i < currentPiece.piece.length; i++) {
             for (let j = 0; j < currentPiece.piece[i].length; j++) {
                 if (currentPiece.piece[i][j]) {
-                    board[currentPiece.y + i][currentPiece.x + j] = currentPiece.piece[i][j];
+                    board[currentPiece.y + i][currentPiece.x + j] = currentPiece.piece[i][j]
                     if(currentPiece.piece[i][j] === 2){
-                        board[currentPiece.y + i][currentPiece.x + j] = 1;
+                        board[currentPiece.y + i][currentPiece.x + j] = 1
                     }
                 }
             }
@@ -337,18 +351,18 @@ function play_game(ROWS, COLS) {
     }
 
     function hardDrop(){
-        let originalY = currentPiece.y;
+        let originalY = currentPiece.y
 
         while (!collides(currentPiece.x, currentPiece.y + 1, currentPiece.piece)) {
-            currentPiece.y++;
+            currentPiece.y++
         }
     
         if (originalY !== currentPiece.y) {
-            clearPiece();
-            placePiece();
-            generateNewPiece();
-            can_remove = true;
-            checkLines();
+            clearPiece()
+            placePiece()
+            generateNewPiece()
+            can_remove = true
+            checkLines()
         }
     }
 
@@ -380,13 +394,13 @@ function play_game(ROWS, COLS) {
     function hasSpecialPiece(line) {
         for (let i = 0; i < COLS; i++) {
             if (board[line][i] === 3) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
-    let boardInverted = false;
+    let boardInverted = false
 
     function checkLines() {
         if (can_remove) {
@@ -403,8 +417,8 @@ function play_game(ROWS, COLS) {
     
             if (linesToRemove.length > 0) {
                 linesToRemove.forEach(line => {
-                    for (let i = 0; i < COLS ; i++) {
-                        board[line][i] = 0;
+                    for (let i = 0; i < COLS;  i++) {
+                        board[line][i] = 0
                     }
                     pullDownOneTimeFromLine(line)
                     lines.innerText = parseInt(lines.innerText) + 1
@@ -416,7 +430,7 @@ function play_game(ROWS, COLS) {
         
                 if (remaining_points <= 0) {
                     level.innerText = parseInt(level.innerText) + 1
-                    increaseSpeed();
+                    increaseSpeed()
                     remaining_points += 300
                 }
             }
@@ -426,46 +440,46 @@ function play_game(ROWS, COLS) {
 
     function mirrorBoard() {
         for (let i = 0; i < ROWS; i++) {
-            board[i].reverse();
+            board[i].reverse()
         }
-        boardInverted = !boardInverted;
+        boardInverted = !boardInverted
     }
 
     document.addEventListener('keydown', event => {
         switch (event.code) {
             case 'ArrowDown':
-                moveDown();
-                break;
+                moveDown()
+                break
             case 'ArrowRight':
                 if(boardInverted){
-                    moveLeft();
+                    moveLeft()
                 } else {
-                    moveRight();
+                    moveRight()
                 }
-                break;
+                break
             case 'ArrowLeft':
                 if(boardInverted){
-                    moveRight();
+                    moveRight()
                 } else {
-                    moveLeft();
+                    moveLeft()
                 }
-                break;
+                break
             case 'ArrowUp':
-                rotatePiece();
-                break;
+                rotatePiece()
+                break
             case 'Space':
-                hardDrop();
-                break;
+                hardDrop()
+                break
         }
-    });
+    })
 
-    let currentLevel = 1;
+    let currentLevel = 1
 
-    var PHYSICS_LOOP_INTERVAL = 1000 / 2;
+    var PHYSICS_LOOP_INTERVAL = 1000 / 2
 
     function increaseSpeed() {
-        currentLevel++;
-        PHYSICS_LOOP_INTERVAL = 1000 / (2 + currentLevel); 
+        currentLevel++
+        PHYSICS_LOOP_INTERVAL = 1000 / (2 + currentLevel) 
     }
 
     function physicsLoop() {
@@ -475,12 +489,12 @@ function play_game(ROWS, COLS) {
 
     function gameLoop() {
         if(boardInverted){
-            drawBoardWithBorder();
+            drawBoardWithBorder()
         } else {
-            drawBoard();
+            drawBoard()
         }
-        drawPiece();
-        setTimeout(gameLoop, 1);
+        drawPiece()
+        setTimeout(gameLoop, 1)
     }
 
     gameLoop()

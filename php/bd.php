@@ -22,6 +22,8 @@
         PRIMARY KEY (`id_rank`)) ENGINE = InnoDB";
         
         $conn->exec($sql);
+
+        echo "Tabelas criadas com sucesso!";
     } catch(PDOException $e) {
         echo "Ocorreu um erro: " . $e->getMessage();
     }
