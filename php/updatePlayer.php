@@ -11,9 +11,10 @@
             session_destroy();
         } else {
             echo "Player criado com sucesso";
-            header('Location: ../perfil.php');
         }
     } catch(PDOException $e) {
         echo "Ocorreu um erro: " . $e->getMessage();
     }
+    
+    header('Location: ../perfil.php');
 ?>

@@ -14,11 +14,11 @@
                 $_SESSION['senha'] = $_POST['password'];
                 
                 echo "Login efetuado com sucesso";  
-
-                header('Location: ../menu.php');
             }
         } catch(PDOException $e) {
             echo "Ocorreu um erro: " . $e->getMessage();
         }
+        
+        header('Location: ../menu.php');
     }
 ?>

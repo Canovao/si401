@@ -13,10 +13,10 @@
             $_SESSION['senha'] = $_POST['password'];
             
             echo "Player criado com sucesso";  
-
-            header('Location: ../menu.php');
         }
     } catch(PDOException $e) {
         echo "Ocorreu um erro: " . $e->getMessage();
     }
+    
+    header('Location: ../menu.php');
 ?>

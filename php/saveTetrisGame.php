@@ -18,10 +18,10 @@
             } else {
                 echo "Game saved";
             }
-
-            header('Location: ../endGame.php');
         } catch(PDOException $e) {
             echo "Ocorreu um erro: " . $e->getMessage();
         }
+        
+        header('Location: ../endGame.php');
     }
 ?>
