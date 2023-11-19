@@ -126,7 +126,7 @@
 		<div class="container-tetris">
 			<div class="ranking-gameboy">
 				<div class="title-ranking">
-					<h1 class="title-ranking">SEUS 10 MELHORES PARTIDAS</h1>
+					<h1 class="title-ranking">SUAS 10 MELHORES PARTIDAS</h1>
 				</div>
 				<div class="ranking">
 					<table class="tabela-body">
@@ -145,7 +145,7 @@
 
 								$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
 
-								$stmt = $conn->query("SELECT * FROM ranking WHERE username = " . $username . " ORDER BY pontuacao DESC LIMIT 10");
+								$stmt = $conn->query("SELECT * FROM ranking WHERE username = '" . $username . "' ORDER BY pontuacao DESC LIMIT 10");
 
 								$top10 = 1;
 

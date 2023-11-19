@@ -160,7 +160,7 @@
 
 								$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
 
-								$stmt = $conn->query("SELECT * FROM ranking WHERE username = " . $username . " ORDER BY pontuacao DESC LIMIT 10");
+								$stmt = $conn->query("SELECT * FROM ranking WHERE username = '" . $username . "' ORDER BY pontuacao DESC LIMIT 10");
 
 								$top10 = 1;
 
