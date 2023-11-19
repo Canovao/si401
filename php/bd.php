@@ -2,7 +2,7 @@
     try {
         $conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
 
-        $sql = "CREATE TABLE `tetris`.`jogadores` (
+        $sql = "CREATE TABLE IF NOT EXISTS `tetris`.`jogadores` (
         `username` TEXT(20) NOT NULL,
         `nome_completo` TEXT NOT NULL,
         `email` TEXT NOT NULL,
@@ -14,7 +14,7 @@
 
         $conn->exec($sql);
 
-        $sql = "CREATE TABLE `tetris`.`ranking` (
+        $sql = "CREATE TABLE IF NOT EXISTS `tetris`.`ranking` (
         `id_rank` INT(255) NOT NULL,
         `username` TEXT(20) NOT NULL ,
         `pontuacao` INT NOT NULL,

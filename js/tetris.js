@@ -265,8 +265,15 @@ function play_game(ROWS, COLS) {
         }
     }
 
-    function endGame() {
-        // TODO na próxima etapa do projeto (PHP) salvar os dados da partida do jogador no banco de dados
+    async function endGame() {
+        const formData = new FormData();
+        formData.append("pontuacao", parseInt(points.innerText));
+        formData.append("nivel", parseInt(level.innerText));
+
+        const response = await fetch(window.location.hostname + '/php/saveTetrisGame.php', {
+            method: "POST",
+            body: formData,
+        });
         window.location.href = 'endGame.html'
     }
 
