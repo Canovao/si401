@@ -1,3 +1,7 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,13 +38,13 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
@@ -53,7 +57,7 @@
 				<div class="menu-bemvindo">
 					<h1>Bem-vindo, Jogador!</h1>
 				</div>
-				<a class="glow-on-hover-jogar" href="jogo.html" id="jogar">Jogue Agora!</a>
+				<a class="glow-on-hover-jogar" href="jogo.php" id="jogar">Jogue Agora!</a>
 			</section>
 			<div class="container">
 				<div class="container-lado-lado ">

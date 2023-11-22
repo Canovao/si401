@@ -1,0 +1,21 @@
+Crie um novo banco de dados chamado "tetris" e execute os seguintes comandos SQL nesse banco de dados:
+
+CREATE TABLE IF NOT EXISTS `tetris`.`jogadores` (
+    `username` TEXT(20) NOT NULL,
+    `nome_completo` TEXT NOT NULL,
+    `email` TEXT NOT NULL,
+    `senha` TEXT NOT NULL,
+    `telefone` TEXT NOT NULL,
+    `cpf` TEXT NOT NULL,
+    `data_nascimento` DATE NOT NULL, 
+    PRIMARY KEY (`username`(20))) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `tetris`.`ranking` (
+`id_rank` INT(255) NOT NULL,
+`username` TEXT(20) NOT NULL ,
+`pontuacao` INT NOT NULL,
+`nivel` INT NOT NULL,
+PRIMARY KEY (`id_rank`)) ENGINE = InnoDB;
+
+Obs: Após a criação do banco de dados é possível executar o arquivo bd.php
+Obs-2: É possível chamar a criação das tabelas acessando localhost/php/bd.php

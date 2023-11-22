@@ -27,7 +27,7 @@
         <!-- FIM HEADER -->
         <div class="container-login">
             <div class="box-login">
-                <form>  
+                <form action="php/startSession.php" method="POST">  
                     <div class="wrap-input">
                         <span class="login-title">
                             Login
@@ -39,11 +39,11 @@
                     </div>
 
                     <div class="wrap-input">
-                        <input class="input100" type="password" name="pass" placeholder="Password">
+                        <input class="input100" type="password" name="password" placeholder="Password">
                     </div>
 
                     <div class="wrap-input"> 
-                        <a class="login-button no-decoration" href="menu.html">Entrar</a>
+                        <button type="submit" class="login-button no-decoration">Entrar</button>
                     </div>
                     <div class="wrap-input">
                         <p id="cadastro-link">Ainda não tem Cadastro? <a href="cadastro.html">Clique Aqui!</a></p>

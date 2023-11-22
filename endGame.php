@@ -1,8 +1,12 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 	<head>
 		<link rel="icon" href="imagens/logounicamp.png" type="image/png">
-		<title>Mirror Tetris - Ranking</title>
+		<title>Mirror Tetris - Menu</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/main.css">
 	</head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,106 +38,78 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
 					</nav>
 				</header>
 			</div>
-		</div>
-		<!-- FIM HEADERS -->
-		<!-- CONTEUDO -->
-		<div class="container-tetris">
-			<div id="ranking-gameboy">
-				<div class="title-ranking">
-					<h1 class="title-ranking">10 MELHORES JOGADORES</h1>
-				</div>
-				<div class="seu-ranking">
-					<p class="seu-ranking">SEU RANKING: 243°</p>
-				</div>
-				<div id="ranking">
-					<table class="tabela-body">
-						<thead>
-							<tr>
-								<th>Rank</th>
-								<th>Username</th>
-								<th>Pontuação</th>
-								<th>Nível</th>
-							</tr>
-						</thead>
-						<tr>
-							<td>1°</td>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-						</tr>
-						<tr>
-							<td>2°</td>
-							<td>Joãozinho</td>
-							<td>9.000</td>
-							<td>12</td>
-						</tr>
-						<tr>
-							<td>3°</td>
-							<td>Joãozinho</td>
-							<td>8.000</td>
-							<td>11</td>
-						</tr>
-						<tr>
-							<td>4°</td>
-							<td>Joãozinho</td>
-							<td>7.000</td>
-							<td>9</td>
-						</tr>
-						<tr>
-							<td>5°</td>
-							<td>Joãozinho</td>
-							<td>6.000</td>
-							<td>8</td>
-						</tr>
-						<tr>
-							<td>6º</td>
-							<td>Joãozinho</td>
-							<td>5.000</td>
-							<td>7</td>
-						</tr>
-						<tr>
-							<td>7°</td>
-							<td>Joãozinho</td>
-							<td>4.000</td>
-							<td>6</td>
-						</tr>
-						<tr>
-							<td>8°</td>
-							<td>Joãozinho</td>
-							<td>3.000</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>9°</td>
-							<td>Joãozinho</td>
-							<td>2.000</td>
-							<td>4</td>
-						</tr>
-						<tr>
-							<td>10°</td>
-							<td>Joãozinho</td>
-							<td>1.000</td>
-							<td>3</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<!-- FIM CONTEUDO-->
-		<!-- FOOTER -->
+			<!-- FIM HEADERS -->
+			<!-- CONTEÚDO -->
+			<section class="titulo_body">
+				<table class="tetris-list">
+					<tr>
+						<td>
+							<div>
+								<h1 class="titulo_body">RANKING PESSOAL</h1>
+								<div class="container-ranking">
+									<table class="tabela-rank-pessoal">
+										<thead>
+											<tr>
+												<th>Rank</th>
+												<th>Username</th>
+												<th>Pontuação</th>
+												<th>Nível</th>
+											</tr>
+										</thead>
+										<!-- PERSONAL RANKING -->
+										<?php
+											try {
+												$username = $_SESSION["username"];
+
+												$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+
+												$stmt = $conn->query("SELECT * FROM ranking WHERE username = '" . $username . "' ORDER BY pontuacao DESC LIMIT 10");
+
+												$top10 = 1;
+
+												while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+													echo "<tr>";
+													echo "<td>" . $top10 . "</td>";
+													echo "<td>" . $row["username"] . "</td>";
+													echo "<td>" . $row["pontuacao"] . "</td>";
+													echo "<td>" . $row["nivel"] . "</td>";
+													echo "</tr>";
+													$top10++;
+												}
+
+
+											} catch(PDOException $e) {
+												echo "Ocorreu um erro: " . $e->getMessage();
+											}
+										?>
+									</table>
+								</div>
+							</div>
+						</td>
+						<td>
+							<h2>Fim de Jogo!</h2>
+							<div>
+								<a class="play-again-button no-decoration" href="jogo.php">Jogar Novamente</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<!-- FIM CONTEÚDO -->
+			<!-- FOOTER -->
 			<div class="footer_container">
 				<section class="footer_content ">
 					<ul class="footer-list">
@@ -204,13 +180,14 @@
 						</li>
 					</ul>
 				</section>
-				<footer class="footer_section">
-					<p>
-						&copy; Todos os Direitos Reservados para 
-						<a href="https://www.ft.unicamp.br/">Faculdade de Tecnologia - Unicamp</a>
-					</p>		
-				</footer>
+					<footer class="footer_section">
+						<p>
+							&copy; Todos os Direitos Reservados para 
+							<a href="https://www.ft.unicamp.br/">Faculdade de Tecnologia - Unicamp</a>
+						</p>		
+					</footer>
 			</div>	
 			<!-- FIM FOOTER -->
+		</div>
 	</body>
 </html>

@@ -1,3 +1,7 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -17,10 +21,10 @@
 							<div class="navbar-itens">
 								<ul class="navbar-nav">
 									<li class="nav-item active">
-										<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+										<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 									</li>
 									<li class="nav-item active">
-										<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+										<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 									</li>
 								</ul>
 							</div>
@@ -34,13 +38,13 @@
 							<div class="navbar-itens">
 								<ul class="navbar-nav-left">
 									<li class="nav-item ">
-										<a class="nav-link " href="menu.html">Menu</a>
+										<a class="nav-link " href="menu.php">Menu</a>
 									</li>
 									<li class="nav-item ">
-										<a class="nav-link " href="jogo.html">Jogar</a>
+										<a class="nav-link " href="jogo.php">Jogar</a>
 									</li>
 									<li class="nav-item ">
-										<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+										<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 									</li>
 								</ul>
 							</div>
@@ -135,7 +139,7 @@
 				</div>
 			</div>
 		</section>
-		<a id="seta-voltar" href="jogo.html">
+		<a id="seta-voltar" href="jogo.php">
 		</a>
 		<section id="tetris_content" class="tetris_content">
 			<div class="tetris-list">
@@ -143,60 +147,38 @@
 					<table class="tabela-rank-pessoal">
 						<thead>
 							<tr>
-								<th>Nome</th>
+								<th>Rank</th>
+								<th>Username</th>
 								<th>Pontuação</th>
 								<th>Nível</th>
-								<th>Tempo</th>
 							</tr>
 						</thead>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
-						<tr>
-							<td>Joãozinho</td>
-							<td>10.000</td>
-							<td>16</td>
-							<td>00:03:00</td>
-						</tr>
+						<!-- PERSONAL RANKING -->
+						<?php
+							try {
+								$username = $_SESSION["username"];
+
+								$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+
+								$stmt = $conn->query("SELECT * FROM ranking WHERE username = '" . $username . "' ORDER BY pontuacao DESC LIMIT 10");
+
+								$top10 = 1;
+
+								while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+									echo "<tr>";
+									echo "<td>" . $top10 . "</td>";
+									echo "<td>" . $row["username"] . "</td>";
+									echo "<td>" . $row["pontuacao"] . "</td>";
+									echo "<td>" . $row["nivel"] . "</td>";
+									echo "</tr>";
+									$top10++;
+								}
+
+
+							} catch(PDOException $e) {
+								echo "Ocorreu um erro: " . $e->getMessage();
+							}
+						?>
 					</table>
 				</div>
 			</div>
@@ -222,7 +204,7 @@
 						<h1 class="info-game">Linhas Eliminadas:&nbsp;</h1><h1 id="lines" class="info-game">0</h1>
 					</div>
 					<div class="tempo-de-partida">
-						<h1 class="info-game">Tempo:&nbsp;</h1><h1 id="time" class="info-game">00:-1</h1>
+						<h1 class="info-game">Tempo:&nbsp;</h1><h1 id="time" class="info-game">00:00</h1>
 					</div>
 				</div>
 			</div>

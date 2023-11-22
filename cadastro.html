@@ -30,7 +30,7 @@
 
     <div class="container-cadastro">
         <div class="box-cadastro">
-            <form>  
+            <form action="php/createPlayer.php" method="POST">  
                 <div class="wrap-input">
                     <span class="cadastro-title">
                         Novo Cadastro
@@ -38,7 +38,7 @@
                 </div>
                 
                 <div class="wrap-input">
-                    <input class="input100" type="text" name="full-name" placeholder="Nome Completo">
+                    <input class="input100" type="text" name="nome_completo" placeholder="Nome Completo">
                 </div>
 
                 <div class="wrap-input">
@@ -46,27 +46,27 @@
                 </div>
 
                 <div class="wrap-input">
-                    <input class="input100" type="email" name="e-mail" placeholder="E-mail" required>
+                    <input class="input100" type="email" name="email" placeholder="E-mail" required>
                 </div>
 
                 <div class="wrap-input">
-                    <input class="input100" type="password" name="pass" placeholder="Senha" required>
+                    <input class="input100" type="password" name="password" placeholder="Senha" required>
                 </div>
 
                 <div class="wrap-input">
-                    <input class="input100" type="tel" name="phone" maxlength="20" placeholder="Telefone">
+                    <input class="input100" type="tel" name="telefone" maxlength="20" placeholder="Telefone">
                 </div>
 
                 <div class="wrap-input">
-                    <input class="input100" type="number" name="cpf-cnpj" placeholder="CPF">
+                    <input class="input100" type="number" name="cpf" placeholder="CPF">
                 </div>
 
                 <div class="wrap-input">
-                    <input class="input100" type="text" name="data-nascimento" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Data de Nascimento" required>
+                    <input class="input100" type="text" name="data_nascimento" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Data de Nascimento" required>
                 </div>
 
                 <div class="wrap-input">
-                    <a class="login-button no-decoration" href="menu.html">Cadastrar</a>
+                    <button type="submit" class="login-button no-decoration">Cadastrar</button>
                 </div>
             </form>
         </div>

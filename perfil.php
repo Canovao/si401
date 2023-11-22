@@ -1,3 +1,7 @@
+<?php
+	require 'php/verifySession.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -17,10 +21,10 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav">
 								<li class="nav-item active">
-									<a class="nav-link" href="login.html">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
+									<a class="nav-link" href="php/logout.php">Sair <img class="img-perfil" src="imagens/logout_icon.png" alt="ícone de logout"></a>
 								</li>
 								<li class="nav-item active">
-									<a class="nav-link" href="perfil.html">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
+									<a class="nav-link" href="perfil.php">Perfil <img class="img-perfil" src="imagens/perfil.png" alt="ícone de perfil"></a>
 								</li>
 							</ul>
 						</div>
@@ -34,13 +38,13 @@
 						<div class="navbar-itens">
 							<ul class="navbar-nav-left">
 								<li class="nav-item ">
-									<a class="nav-link " href="menu.html">Menu</a>
+									<a class="nav-link " href="menu.php">Menu</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link " href="jogo.html">Jogar</a>
+									<a class="nav-link " href="jogo.php">Jogar</a>
 								</li>
 								<li class="nav-item ">
-									<a class="nav-link" href="rankingGlobal.html">Ranking Global</a>
+									<a class="nav-link" href="rankingGlobal.php">Ranking Global</a>
 								</li>
 							</ul>
 						</div>
@@ -50,43 +54,66 @@
 			<!-- FIM HEADERS -->
 			<!-- CONTEUDO -->
 			<div class="container-login">
-				<div class="box-perfil">
-					<h1>Conta</h1>
-					<div class="image">
-						<img class="img-conta" src="imagens/lick.jpg" alt="foto de perfil">
-						<h2  class="nome-perfil"><span>Nome<span class='spacer'></span></span></h2>
-					</div>
-					<div class="wrap-information">
-						<span class="information">Nome Completo:</span>
-					</div>
-					<div class="wrap-information">
-						<span class="information">Username:					
-							<sub class="nao-alterar">*Não pode ser alterado!</sub>
-						</span>
-					</div>
+				<?php
+					try {
+						$conn = new PDO("mysql:host=localhost;dbname=tetris", "root", "");
+				
+						$stmt = $conn->query("SELECT * FROM jogadores WHERE username = '" . $_SESSION["username"] . "'");
+						$result = $stmt->fetch(PDO::FETCH_ASSOC);
+						$nome = $result["nome_completo"];
+						$username = $result["username"];
+						$email = $result["email"];
+						$telefone = $result["telefone"];
+						$cpf = $result["cpf"];
+						$data_nascimento = $result["data_nascimento"];
 
-					<div class="wrap-information">
-						<span class="information">Email:</span>
-					</div>
-					<div class="wrap-information">
-						<span class="information">Telefone:</span>
-					</div>
-					<div class="wrap-information">
-						<span class="information">CPF:
-							<sub class="nao-alterar">*Não pode ser alterado!</sub>
-						</span>
-					</div>
-
-					<div class="wrap-information">
-						<span class="information">Data de Nascimento:
-							<sub class="nao-alterar">*Não pode ser alterado!</sub>
-						</span>
-					</div>
-
-					<div class="wrap-input"> 
-                        <a class="login-button no-decoration" >Editar</a>
-                    </div>
-				</div>
+						echo '
+							<div class="box-perfil">
+								<form action="php/updatePlayer.php" method="POST">  
+									<div class="wrap-input">
+										<span class="cadastro-title">
+											Sua Conta
+										</span>                        
+									</div>
+									
+									<div class="wrap-input">
+										<input class="input100" type="text" name="nome_completo" placeholder="'. $nome .'" value="'. $nome .'">
+									</div>
+					
+									<div class="wrap-input">
+										<input class="input100" type="email" name="email" placeholder="'. $email .'" value="'. $email .'">
+									</div>
+					
+									<div class="wrap-input">
+										<input class="input100" type="tel" name="telefone" maxlength="20" placeholder="'. $telefone .'" value="'. $telefone .'">
+									</div>
+					
+									<div class="wrap-information">
+										<span class="information">Username: '. $username .'					
+											<sub class="nao-alterar">*Não pode ser alterado!</sub>
+										</span>
+									</div>
+									<div class="wrap-information">
+										<span class="information">CPF: '. $cpf .'
+											<sub class="nao-alterar">*Não pode ser alterado!</sub>
+										</span>
+									</div>
+									<div class="wrap-information">
+										<span class="information">Data de Nascimento: '. $data_nascimento .'
+											<sub class="nao-alterar">*Não pode ser alterado!</sub>
+										</span>
+									</div>
+					
+									<div class="wrap-input">
+										<button type="submit" class="login-button no-decoration">Editar</button>
+									</div>
+								</form>
+							</div>
+						';
+					} catch(PDOException $e) {
+						echo "Ocorreu um erro: " . $e->getMessage();
+					}
+				?>
 			</div>
 			<!-- FIM CONTEUDO-->
 			<!-- FOOTER -->
